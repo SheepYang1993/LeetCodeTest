@@ -15,6 +15,7 @@ import me.sheepyang.leetcodetest.R;
 import me.sheepyang.leetcodetest.adapter.ProblemAdapter;
 import me.sheepyang.leetcodetest.entity.Problem;
 import me.sheepyang.leetcodetest.entity.ProblemList;
+import me.sheepyang.leetcodetest.util.ProblemUtil;
 import me.sheepyang.leetcodetest.widget.recyclerview.DividerItemDecoration;
 import me.sheepyang.leetcodetest.widget.recyclerview.NoAlphaItemAnimator;
 
@@ -41,46 +42,28 @@ public class ProblemListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setBarTitle("题库列表");
         initView();
+        initListener();
         initData();
+    }
+
+    private void initListener() {
+        refreshLayout.setEnableLoadmore(false);
+        refreshLayout.setEnableRefresh(false);
     }
 
     private void initData() {
         ProblemList allList1 = new ProblemList();
-        List<Problem> problemList1 = new ArrayList<>();
-        problemList1.add(new Problem());
-        problemList1.add(new Problem());
-        problemList1.add(new Problem());
+        List<Problem> problemList1 = ProblemUtil.getUnSolved(mContext);
         allList1.setList(problemList1);
-        allList1.setHead("头部");
+        allList1.setHeader("待解决");
 
         ProblemList allList2 = new ProblemList();
-        List<Problem> problemList2 = new ArrayList<>();
-        problemList2.add(new Problem());
-        problemList2.add(new Problem());
+        List<Problem> problemList2 = ProblemUtil.getSolved();
         allList2.setList(problemList2);
-        allList2.setFoot("这是尾部啊！！");
-
-        ProblemList allList3 = new ProblemList();
-        List<Problem> problemList3 = new ArrayList<>();
-        problemList3.add(new Problem());
-        problemList3.add(new Problem());
-        problemList3.add(new Problem());
-        problemList3.add(new Problem());
-        allList3.setList(problemList3);
-
-        ProblemList allList4 = new ProblemList();
-        List<Problem> problemList4 = new ArrayList<>();
-        allList4.setList(problemList4);
-        allList4.setHead("头部");
-        allList4.setFoot("这是尾部啊！！");
-
-        ProblemList allList5 = new ProblemList();
+        allList2.setHeader("已解决");
 
         mData.add(allList1);
         mData.add(allList2);
-        mData.add(allList3);
-        mData.add(allList4);
-        mData.add(allList5);
 
         mAdapter.updata(mData);
     }

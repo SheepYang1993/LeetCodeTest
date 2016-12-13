@@ -9,23 +9,32 @@ import java.util.List;
 public class ProblemList {
     private int type;
     private List<Problem> list;
-    private String head;
-    private String foot;
+    private String header;
+    private String footer;
+    private boolean isOpen;// 是否打开列表
 
-    public String getHead() {
-        return head;
+    public boolean isOpen() {
+        return isOpen;
     }
 
-    public void setHead(String head) {
-        this.head = head;
+    public void setOpen(boolean open) {
+        isOpen = open;
     }
 
-    public String getFoot() {
-        return foot;
+    public String getHeader() {
+        return header;
     }
 
-    public void setFoot(String foot) {
-        this.foot = foot;
+    public void setHeader(String header) {
+        this.header = header;
+    }
+
+    public String getFooter() {
+        return footer;
+    }
+
+    public void setFooter(String footer) {
+        this.footer = footer;
     }
 
     public int getType() {

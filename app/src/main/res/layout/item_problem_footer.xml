@@ -5,10 +5,10 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/tv_footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/backgroud_gray"
         android:padding="15dp"
-        android:text="这是尾部"
         android:textSize="18sp" />
 </LinearLayout>

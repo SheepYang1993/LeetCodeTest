@@ -1,16 +1,20 @@
 package me.sheepyang.leetcodetest.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.sheepyang.leetcodetest.R;
+import me.sheepyang.leetcodetest.activity.MainActivity;
 import me.sheepyang.leetcodetest.entity.Problem;
 import me.sheepyang.leetcodetest.entity.ProblemList;
 
@@ -36,7 +40,7 @@ public class ProblemAdapter extends RecyclerView.Adapter {
         switch (viewType) {
             case TYPE_HEAD:
                 ViewGroup vGroup = (ViewGroup) mInflater.inflate(R.layout.item_problem_header, parent, false);
-                ViewHeadHolder vhGroup = new ViewHeadHolder(vGroup);
+                ViewHeaderHolder vhGroup = new ViewHeaderHolder(vGroup);
                 return vhGroup;
             case TYPE_CONTENT:
                 ViewGroup vImage = (ViewGroup) mInflater.inflate(R.layout.item_problem_content, parent, false);
@@ -55,10 +59,10 @@ public class ProblemAdapter extends RecyclerView.Adapter {
         int count = 0;
         for (int i = 0; i < mData.size(); i++) {
             ProblemList allList = mData.get(i);
-            if (!TextUtils.isEmpty(allList.getHead())) {
+            if (!TextUtils.isEmpty(allList.getHeader())) {
                 if (position == count) {
-                    ViewHeadHolder vGroup = (ViewHeadHolder) holder;
-//                vGroup.textView_head.setText(bean.getHeader());
+                    ViewHeaderHolder vhHeader = (ViewHeaderHolder) holder;
+                    vhHeader.tvHeader.setText(allList.getHeader());
                 }
                 count++;
             }
@@ -67,17 +71,28 @@ public class ProblemAdapter extends RecyclerView.Adapter {
             if (problemList != null) {
                 for (int j = 0; j < problemList.size(); j++) {
                     if (position == count) {
-                        ViewContentHolder vhImage = (ViewContentHolder) holder;
-//                    vhImage.textView_content.setText(dataList.get(j));
+                        final Problem problem = problemList.get(j);
+                        ViewContentHolder vhContent = (ViewContentHolder) holder;
+                        if (!TextUtils.isEmpty(problem.getTitle())) {
+                            vhContent.tvContent.setText(problemList.get(j).getTitle());
+                        }
+                        vhContent.itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(mContext, MainActivity.class);
+                                intent.putExtra("Problem", problem);
+                                mContext.startActivity(intent);
+                            }
+                        });
                     }
                     count++;
                 }
             }
 
-            if (!TextUtils.isEmpty(allList.getFoot())) {
+            if (!TextUtils.isEmpty(allList.getFooter())) {
                 if (position == count) {
-                    ViewFooterHolder vhImage = (ViewFooterHolder) holder;
-//                vhImage.textView_footer.setText(bean.getFooter());
+                    ViewFooterHolder vhFooter = (ViewFooterHolder) holder;
+                    vhFooter.tvFooter.setText(allList.getFooter());
                 }
                 count++;
             }
@@ -89,7 +104,7 @@ public class ProblemAdapter extends RecyclerView.Adapter {
         int count = 0;
         for (int i = 0; i < mData.size(); i++) {
             ProblemList allList = mData.get(i);
-            if (!TextUtils.isEmpty(allList.getHead())) {
+            if (!TextUtils.isEmpty(allList.getHeader())) {
                 if (position == count) {
                     return TYPE_HEAD;
                 } else {
@@ -108,7 +123,7 @@ public class ProblemAdapter extends RecyclerView.Adapter {
                 }
             }
 
-            if (!TextUtils.isEmpty(allList.getFoot())) {
+            if (!TextUtils.isEmpty(allList.getFooter())) {
                 if (position == count) {
                     return TYPE_FOOTER;
                 } else {
@@ -124,7 +139,7 @@ public class ProblemAdapter extends RecyclerView.Adapter {
         int count = 0;
         if (mData != null && mData.size() > 0) {
             for (int i = 0; i < mData.size(); i++) {
-                if (!TextUtils.isEmpty(mData.get(i).getHead())) {
+                if (!TextUtils.isEmpty(mData.get(i).getHeader())) {
                     count++;
                 }
                 ProblemList allList = mData.get(i);
@@ -132,7 +147,7 @@ public class ProblemAdapter extends RecyclerView.Adapter {
                 if (problemList != null) {
                     count += problemList.size();
                 }
-                if (!TextUtils.isEmpty(mData.get(i).getFoot())) {
+                if (!TextUtils.isEmpty(mData.get(i).getFooter())) {
                     count++;
                 }
             }
@@ -140,15 +155,19 @@ public class ProblemAdapter extends RecyclerView.Adapter {
         return count;
     }
 
-    static class ViewHeadHolder extends RecyclerView.ViewHolder {
+    static class ViewHeaderHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.tv_header)
+        TextView tvHeader;
 
-        public ViewHeadHolder(View rootView) {
+        public ViewHeaderHolder(View rootView) {
             super(rootView);
             ButterKnife.bind(this, rootView);
         }
     }
 
     static class ViewContentHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.tv_content)
+        TextView tvContent;
 
         public ViewContentHolder(View rootView) {
             super(rootView);
@@ -157,6 +176,8 @@ public class ProblemAdapter extends RecyclerView.Adapter {
     }
 
     static class ViewFooterHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.tv_footer)
+        TextView tvFooter;
 
         public ViewFooterHolder(View rootView) {
             super(rootView);
