@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="white">#fff</color>
+    <color name="black">#000</color>
+    <color name="transparent">#0000</color>
+
+    <!--字体 黑色-->
+    <color name="word_black">#323232</color>
+    <!--字体 灰色-->
+    <color name="word_gray">#848484</color>
+    <!--分割线-->
+    <color name="split_gray">#cccccc</color>
+
+    <!--灰色背景-->
+    <color name="backgroud_gray">#f0f0f0</color>
+    <!--白色背景-->
+    <color name="backgroud_white">#fafafa</color>
+</resources>
